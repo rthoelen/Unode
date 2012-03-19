@@ -1,5 +1,5 @@
-#define VERSION                "Unode 1.0.0"
-#define COMPILING	       "Novmeber 26, 2010"
+#define VERSION                "Unode 1.0.1"
+#define COMPILING	       "March 19, 2012"
 #define APPNAME                "unode"
 #define APPNAME_EXT                "Unode"
 
