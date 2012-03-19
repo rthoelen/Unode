@@ -1,4 +1,4 @@
-all: nodeusers uronode @FLEXNET@
+all: nodeusers unode @FLEXNET@
 
 CC = gcc
 LD = gcc
@@ -31,7 +31,7 @@ install: installbin installman installhelp
 	install -m 644    -o root -g root etc/gateways	 $(VAR_DIR)/flex
 	
 installbin: all
-	install -m 4755 -s -o root -g root uronode	 $(SBIN_DIR)
+	install -m 4755 -s -o root -g root unode	 $(SBIN_DIR)
 	install -m 755  -s -o root -g root nodeusers	 $(SBIN_DIR)
 @IN@	install -m 755  -s -o root -g root flexd	 $(SBIN_DIR)
 
@@ -42,41 +42,41 @@ installhelp:
 
 installconf: installhelp
 	install -m 755    -o root -g root -d		 $(ETC_DIR)
-	install -m 600    -o root -g root etc/uronode.conf  $(ETC_DIR)
-	install -m 600    -o root -g root etc/uronode.perms $(ETC_DIR)
-	install -m 600    -o root -g root etc/uronode.info  $(ETC_DIR)
-	install -m 600    -o root -g root etc/uronode.motd  $(ETC_DIR)
-	install -m 600    -o root -g root etc/uronode.users $(ETC_DIR)
-	install -m 600    -o root -g root etc/uronode.routes   $(ETC_DIR)
+	install -m 600    -o root -g root etc/unode.conf  $(ETC_DIR)
+	install -m 600    -o root -g root etc/unode.perms $(ETC_DIR)
+	install -m 600    -o root -g root etc/unode.info  $(ETC_DIR)
+	install -m 600    -o root -g root etc/unode.motd  $(ETC_DIR)
+	install -m 600    -o root -g root etc/unode.users $(ETC_DIR)
+	install -m 600    -o root -g root etc/unode.routes   $(ETC_DIR)
 	install -m 600    -o root -g root etc/flexd.conf  $(ETC_DIR)
 
 installman:
 	install -m 644    -o bin -g bin man/nodeusers.1.gz  $(MAN_DIR)/man1
-	install -m 644    -o bin -g bin man/uronode.conf.5.gz  $(MAN_DIR)/man5
-	install -m 644    -o bin -g bin man/uronode.perms.5.gz $(MAN_DIR)/man5
-	install -m 644    -o bin -g bin man/uronode.8.gz       $(MAN_DIR)/man8
+	install -m 644    -o bin -g bin man/unode.conf.5.gz  $(MAN_DIR)/man5
+	install -m 644    -o bin -g bin man/unode.perms.5.gz $(MAN_DIR)/man5
+	install -m 644    -o bin -g bin man/unode.8.gz       $(MAN_DIR)/man8
 
 upgrade: installman
-	install -m 4755 -s -o root -g root uronode       $(SBIN_DIR)
+	install -m 4755 -s -o root -g root unode       $(SBIN_DIR)
 	install -m 4755 -s -o root -g root nodeusers     $(SBIN_DIR)
 	install -m 4755 -s -o root -g root flexd	 $(SBIN_DIR)
 	install -m 600	-o root -g root	etc/flexd.conf	 $(ETC_DIR)
 
 clean:
-	rm -f *.o *~ *.bak *.orig make.debug nodeusers uronode flexd
+	rm -f *.o *~ *.bak *.orig make.debug nodeusers unode flexd
 	rm -f etc/*~ etc/*.bak etc/*.orig
 	rm -f etc/help/*~ etc/help/*.bak etc/help/*.orig
 
 distclean: clean
 	rm -f .depend Makefile.include config.h
-	rm -f uronode nodeusers @FLEXNET@
+	rm -f unode nodeusers @FLEXNET@
 	rm -f Makefile
 
 depend:
 	$(CC) $(CFLAGS) -M $(COMMON_SRC) $(NODE_SRC) $(NODEUSERS_SRC) $(FLEXD_SRC) > .depend
 
-uronode: $(COMMON_OBJS) $(NODE_OBJS)
-	$(LD) $(LDFLAGS) -o uronode $(COMMON_OBJS) $(NODE_OBJS) $(LIBS) $(ZLIB)
+unode: $(COMMON_OBJS) $(NODE_OBJS)
+	$(LD) $(LDFLAGS) -o unode $(COMMON_OBJS) $(NODE_OBJS) $(LIBS) $(ZLIB)
 
 nodeusers: $(COMMON_OBJS) $(NODEUSERS_OBJS)
 	$(LD) $(LDFLAGS) -o nodeusers $(COMMON_OBJS) $(NODEUSERS_OBJS) $(LIBS) $(ZLIB)

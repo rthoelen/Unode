@@ -48,6 +48,7 @@ static void invert_ssid(char *out, char *in)
  */
 static ax25io *connect_to(char **addr, int family, int escape, int compr)
 {
+  node_log(LOGLVL_DEBUG, "Init connection to %s",*addr);
   int fd;
   ax25io *riop;
   fd_set read_fdset;
@@ -199,7 +200,9 @@ static ax25io *connect_to(char **addr, int family, int escape, int compr)
       return NULL;
     }
     }
+    node_log(LOGLVL_DEBUG, "Test for port");
     if (ax25_config_get_addr(addr[0]) == NULL) {
+      node_log(LOGLVL_DEBUG, "Port is null");
       if (User.ul_type == AF_NETROM) {
           axio_printf(NodeIo,"%s} ", NodeId);
       }
@@ -515,18 +518,21 @@ static ax25io *connect_to(char **addr, int family, int escape, int compr)
 
 int do_connect(int argc, char **argv)
 {
+  node_log(LOGLVL_DEBUG, "Init connection cmd argc is %d and first is: %s",argc,*argv);
   int i, k;
   ax25io *riop;
   struct ax_routes *ax;
   struct flex_dst *flx;
   struct flex_gt *flgt;
-  int c, compress, family = AF_UNSPEC, stay, escape;
+  int  c, compress, family = AF_UNSPEC, stay, escape;
   char *nodoconn = NULL;  
   fd_set fdset;
   char *connstr = NULL;
+  node_log(LOGLVL_DEBUG, "do_connection: axio_puts");
   axio_puts("",NodeIo);
  
   stay = ReConnectTo;
+  node_log(LOGLVL_DEBUG, "do_connection: strcasecmp 's'");
   if (!strcasecmp(argv[argc - 1], "s")) {
     stay = 1;
     argv[--argc] = NULL;
@@ -535,15 +541,19 @@ int do_connect(int argc, char **argv)
     argv[--argc] = NULL;
   }
     compress = 0;
+    node_log(LOGLVL_DEBUG, "do_connection: c = argv[0][0]");
     c = argv[0][0];
+    //node_log(LOGLVL_DEBUG, "do_connection: c is %s",c);
 #ifdef HAVE_ZLIB_H
-   if (*argv[0] == 'z') {
+   node_log(LOGLVL_DEBUG, "do_connection: argv[0] == 'z'");
+   if (argv[0] == 'z') {
 	compress = 1;
 	c = argv[0][1];
    }
 #endif
 
     if (argc < 2) {
+    node_log(LOGLVL_DEBUG, "Parsing connect -> argc <2");
     if (User.ul_type == AF_NETROM) {
         axio_printf(NodeIo,"%s} ", NodeId);
     }
@@ -567,25 +577,30 @@ int do_connect(int argc, char **argv)
     family = AF_AX25;
     }
   else if (argc == 2) { /* Determine destination */
-    static char call[2];
-    strcpy(call, strupr(argv[1]));
-
+    node_log(LOGLVL_DEBUG, "argc is 2'");
+    static char call[10];
+    strncpy(call, strupr(argv[1]),10);
+    node_log(LOGLVL_DEBUG, "Determine destination - call is: %s",call);
+    
     if (find_node(argv[1], NULL)!=NULL) { /* Check NET/ROM */
       family = AF_NETROM;
     }
       else 
     if ((ax=find_route(argv[1], NULL))!=NULL) {  /* Check AX25 Links */
+      node_log(LOGLVL_DEBUG, "Check Ax25 Links");
       k=1;
 
       switch(*ax->conn_type)  { 
       case CONN_TYPE_DIRECT:
       {
+      node_log(LOGLVL_DEBUG, "Conn type DIRECT");
       argv[k++]=ax->dev;
       argv[k++]=ax->dest_call;
       break;  
       } 
       case CONN_TYPE_DIGI:
       {
+      node_log(LOGLVL_DEBUG, "Conn type digi");
       argv[k++]=ax->dev;
       argv[k++]=ax->dest_call;  
 /*      while((k-3)<AX25_MAX_DIGIS&&ax->digis[k-3][0]!='\0') argv[k]=ax->digis[(k++)-3]; */
@@ -593,6 +608,7 @@ int do_connect(int argc, char **argv)
       }
       case CONN_TYPE_NODE:
       {  
+      node_log(LOGLVL_DEBUG, "Conn type node");
       argv[k++]=ax->dev;
       argv[k++]=ax->digis[0];
       nodoconn=ax->dest_call;

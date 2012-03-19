@@ -124,6 +124,7 @@ int main(int argc, char *argv[])
 	signal(SIGQUIT, quit_handler);
 
 #ifdef HAVE_AX25
+        node_log(LOGLVL_DEBUG, "Checking ax25 ports.");
 	if (ax25_config_load_ports() == 0) {
 		node_log(LOGLVL_ERROR, "No AX.25 port data configured");
 		return 1;
@@ -131,11 +132,14 @@ int main(int argc, char *argv[])
 #endif	
 
 #ifdef HAVE_NETROM
+        node_log(LOGLVL_DEBUG, "Checking nr ports.");
 	nr_config_load_ports();
 #endif	
 #ifdef HAVE_ROSE			
+        node_log(LOGLVL_DEBUG, "Checking rose ports.");
 	rs_config_load_ports();
 #endif	
+        node_log(LOGLVL_DEBUG, "Get peer name.");
 	if (getpeername(STDOUT_FILENO, (struct sockaddr *)&saddr, &slen) == -1) {
 		if (errno != ENOTSOCK) {
 			node_log(LOGLVL_ERROR, "getpeername: %s", strerror(errno));
@@ -181,10 +185,16 @@ int main(int argc, char *argv[])
 		p = INET_EOL;
 		break;
 	case AF_UNSPEC:
+                node_log(LOGLVL_DEBUG, "Going into AF_UNSPEC state");
 		strcpy(User.ul_name, "local");
+                node_log(LOGLVL_DEBUG, "done: strcpy(User.ul_name, \"local\")");
 		if ((p = get_call(getuid())) == NULL) {
 			node_log(LOGLVL_ERROR, "No uid->callsign association found", -1);
-			axio_flush(NodeIo);
+                	node_log(LOGLVL_DEBUG, "axio_flush(NodeIo)");
+                        if (NodeIo != NULL){
+				axio_flush(NodeIo);
+                        }
+                	node_log(LOGLVL_DEBUG, "return 1");
 			return 1;
 		}
 		strcpy(User.call, p);
@@ -195,11 +205,13 @@ int main(int argc, char *argv[])
 		node_log(LOGLVL_ERROR, "Unsupported address family %d", User.ul_type);
 		return 1;
 	}
+	node_log(LOGLVL_DEBUG, "Initializing I/O");
 	NodeIo = axio_init(STDIN_FILENO, STDOUT_FILENO, paclen, p);
 	if (NodeIo == NULL) {
 		node_log(LOGLVL_ERROR, "Error initializing I/O");
 		return 1;
 	}
+	node_log(LOGLVL_ERROR, "I/O initializing done");
 #ifdef HAVE_ZLIB_H
 	if (argc > 1 && strcmp(argv[1], "-c") == 0) {
 		axio_compr(NodeIo, 1);

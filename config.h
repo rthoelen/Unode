@@ -6,7 +6,7 @@
  */
 #define HAVE_AX25	1
 #define HAVE_FLEX	1
-#undef HAVE_ROSE
+#define HAVE_ROSE               1
 #define HAVE_NETROM	1
 #define HAVE_ZLIB	1
 #define HAVE_MHEARD	1
@@ -16,7 +16,7 @@
 /*
  * mheard specific (we need to get this out of here!!!!)
  */
-#define	DATA_MHEARD_FILE	"/usr/local/var/ax25/mheard/mheard.dat"
+#define	DATA_MHEARD_FILE	"/var/ax25/mheard/mheard.dat"
 
 /*
  * node specific
@@ -26,5 +26,5 @@
 #define HAVEMOTD		"/etc/ax25/unode.motd"
 #define	CONF_NODE_INFO_FILE	"/etc/ax25/unode.info"
 #define	DATA_NODE_LOGIN_FILE	"/var/ax25/node/loggedin"
-#define	DATA_NODE_HELP_DIR	"/etc/ax25/help/"
+#define	DATA_NODE_HELP_DIR	"/var/ax25/node/help/"
 #endif

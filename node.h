@@ -1,5 +1,7 @@
 #define VERSION                "Unode 1.0.0"
 #define COMPILING	       "Novmeber 26, 2010"
+#define APPNAME                "unode"
+#define APPNAME_EXT                "Unode"
 
 #define STATE_IDLE	0
 #define STATE_TRYING	1
@@ -13,6 +15,7 @@
 #define LOGLVL_ERROR	1
 #define LOGLVL_LOGIN	2
 #define LOGLVL_GW	3
+#define LOGLVL_DEBUG	9
 
 #define PERM_LOGIN		1	/* Permit login			*/
 #define PERM_AX25		2	/* AX.25 gatewaying		*/

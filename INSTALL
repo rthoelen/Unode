@@ -1,6 +1,6 @@
 1. COMPILING and INSTALLING
 
-To compile and run URONode you will need to have libax25-0.0.4 or newer
+To compile and run Unode you will need to have libax25-0.0.4 or newer
 installed on your system. It should work on any platform where libax25 can
 be compiled and installed. 
 Note however that it will NOT work with 2.0.x kernels.
@@ -40,30 +40,30 @@ of what to put into these files. The AX25-HOWTO is a must read also.
 
 2. RUNNING
 
-URONode is intended to be called from ax25d or inetd. It doesn't need
+Unode is intended to be called from ax25d or inetd. It doesn't need
 any command line arguments. See the node(8) manual page.
 
-To run URONode from ax25d, /etc/ax25/ax25d.conf should have something
+To run Unode from ax25d, /etc/ax25/ax25d.conf should have something
 like this in it:
 
   # AX25 Port ax0
   [N1URO-2 VIA ax0]
-  default  * * * * * *  -    root  /usr/bin/uronode  uronode
+  default  * * * * * *  -    root  /usr/bin/unode  unode
 
   # NETROM Port
   <nr0>
-  default  * * * * * *  -    root  /usr/bin/uronode  uronode
+  default  * * * * * *  -    root  /usr/bin/unode  unode
 
 /etc/inetd.conf could have something like this in it:
 
-  # Listen at telnet port -> URONode
-  telnet  stream  tcp     nowait  root    /usr/bin/uronode     uronode
+  # Listen at telnet port -> Unode
+  telnet  stream  tcp     nowait  root    /usr/bin/unode     unode
 
-Note that URONode should always be run as root. Otherwise outgoing
+Note that Unode should always be run as root. Otherwise outgoing
 connects won't work. Also ping needs a raw socket which requires root
 priviledges.
 
-URONode can also be called from command line. It then uses kernel
+Unode can also be called from command line. It then uses kernel
 axassociation table to find a call associated to the user. Again
-for outgoing connects (and ping) to work URONode needs to be
+for outgoing connects (and ping) to work Unode needs to be
 installed setuid root (make install does that by default).

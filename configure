@@ -7,8 +7,8 @@ LIB_DIR=/usr/lib
 MAN_DIR=/usr/share/man
 VAR_DIR=/var/ax25
 
-echo "Welcome to the configuration utility for URONode. This configure script"
-echo "will very simply and easily guide you into installling URONode with as"
+echo "Welcome to the configuration utility for Unode. This configure script"
+echo "will very simply and easily guide you into installling Unode with as"
 echo "very little trouble as possible. All you need to really do is simply"
 echo "answer the following questions below properly. If you make a mistake"
 echo "just break out of it (ctrl+c) and rerun ./configure. Let's get started!"
@@ -108,7 +108,7 @@ fi
 	if [ "$answer" = "Y" -o "$answer" = "y" ]
 	then
 		HAVEMOTD="#define HAVEMOTD"     
-		MOTDPATH='"/etc/ax25/uronode.motd"'
+		MOTDPATH='"/etc/ax25/unode.motd"'
 	fi
 	#
 
@@ -152,7 +152,7 @@ echo "Configuration successful!!"
 sleep 2
 echo "about the authors..."
 sleep 3
-echo "URONode is a combined effort of years worth of work. Those who's code"
+echo "Unode is a combined effort of years worth of work. Those who's code"
 echo "is included in this flavor of a linux based node are:"
 sleep 1
 echo "Brian Rogers N1URO <n1uro@n1uro.com> (current maintainer)"
@@ -172,7 +172,7 @@ echo ""
 echo -n "Shall I run the make command for you ? [Y/n]: "; read answer
 	if [ "$answer" = "Y" -o "$answer" = "y" -o "$answer" = "" ]
         then
-		echo "Making URONode! Please be patient."
+		echo "Making Unode! Please be patient."
 		sleep 1
 		echo "compile errors will be in make.debug."
 		echo ""
@@ -189,9 +189,9 @@ echo -n "Shall I run the make command for you ? [Y/n]: "; read answer
 			echo "FAILED!"
 		fi
 		sleep 1
-		echo -n "uronode: "
+		echo -n "unode: "
 		sleep 2
-		if [ -x ./uronode ]; then
+		if [ -x ./unode ]; then
 			echo "SUCCESS!"
 		else
 			echo "FAILED!"

@@ -9,9 +9,9 @@
 
 #define AX_ROUTES_FILE "/etc/ax25/unode.routes"
 
-#ifndef DATA_MHEARD_FILE
-#define DATA_MHEARD_FILE "/usr/local/var/ax25/mheard/mheard.dat"
-#endif
+//#ifndef DATA_MHEARD_FILE
+//#define DATA_MHEARD_FILE "/usr/local/var/ax25/mheard/mheard.dat"
+//#endif
 
 #define CONN_TYPE_DIRECT 'D'
 #define CONN_TYPE_NODE 'N'

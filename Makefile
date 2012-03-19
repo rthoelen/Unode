@@ -2,7 +2,7 @@ all: nodeusers unode flexd
 
 CC = gcc
 LD = gcc
-CFLAGS = -Wstrict-prototypes -O2 -I/usr/local/include -g
+CFLAGS = -Wstrict-prototypes -O2 -g
 LDFLAGS =
 LIBS = -lax25 -lax25io
 
@@ -52,12 +52,12 @@ installconf: installhelp
 
 installman:
 	install -m 644    -o bin -g bin man/nodeusers.1.gz  $(MAN_DIR)/man1
-	install -m 644    -o bin -g bin man/uronode.conf.5.gz  $(MAN_DIR)/man5
-	install -m 644    -o bin -g bin man/uronode.perms.5.gz $(MAN_DIR)/man5
-	install -m 644    -o bin -g bin man/uronode.8.gz       $(MAN_DIR)/man8
+	install -m 644    -o bin -g bin man/unode.conf.5.gz  $(MAN_DIR)/man5
+	install -m 644    -o bin -g bin man/unode.perms.5.gz $(MAN_DIR)/man5
+	install -m 644    -o bin -g bin man/unode.8.gz       $(MAN_DIR)/man8
 
 upgrade: installman
-	install -m 4755 -s -o root -g root uronode       $(SBIN_DIR)
+	install -m 4755 -s -o root -g root unode       $(SBIN_DIR)
 	install -m 4755 -s -o root -g root nodeusers     $(SBIN_DIR)
 	install -m 4755 -s -o root -g root flexd	 $(SBIN_DIR)
 	install -m 600	-o root -g root	etc/flexd.conf	 $(ETC_DIR)

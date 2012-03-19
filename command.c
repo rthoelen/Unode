@@ -84,10 +84,10 @@ void node_prompt(const char *fmt, ...)
                 axio_printf(NodeIo,"%s} ", NodeId);
         }
         if ((User.ul_type == AF_INET) && (check_perms(PERM_ANSI, 0L) != -1)) {
-                axio_printf(NodeIo,"\n\e[01;31m%s\e[0m@\e[01;34m%s\e[0m:/uronode$ ",User.call, HostName);
+                axio_printf(NodeIo,"\n\e[01;31m%s\e[0m@\e[01;34m%s\e[0m:/%s$ ",User.call, HostName, APPNAME);
         }
         if ((User.ul_type == AF_INET) && (check_perms(PERM_ANSI, 0L) == -1)) {
-            axio_printf(NodeIo,"\n%s@%s:/uronode$ ", User.call, HostName);
+            axio_printf(NodeIo,"\n%s@%s:/%s$ ", User.call, HostName,APPNAME);
         }
 	if ((User.ul_type == AF_AX25) && (check_perms(PERM_ANSI, 0L) != -1)) {
 	     axio_printf(NodeIo,"\e[01;33m");
@@ -109,7 +109,7 @@ void node_logout(char *reason)
 	if (check_perms(PERM_ANSI, 0L) != -1) {
 	axio_printf(NodeIo, "\e[03;36m");
 	}
-        axio_printf(NodeIo, "Thank you %s, for connecting to the \n%s URONode packet shell.\n", User.call, HostName);
+        axio_printf(NodeIo, "Thank you %s, for connecting to the \n%s %s packet shell.\n", User.call, HostName, APPNAME_EXT);
 	if (check_perms(PERM_ANSI, 0L) != -1) {
 	axio_printf(NodeIo, "\e[0;m");
 	}

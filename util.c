@@ -99,6 +99,9 @@ void node_log(int loglevel, const char *fmt, ...)
 	case LOGLVL_GW:
 		pri = LOG_INFO;
 		break;
+	case LOGLVL_DEBUG:
+		pri = LOG_DEBUG;
+		break;
 	default:
 		pri = LOG_INFO;
 		break;

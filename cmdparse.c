@@ -212,6 +212,7 @@ int parse_args(char **argv, char *cmd)
 
 int cmdparse(struct cmd *list, char *cmdline)
 {
+  //node_log(LOGLVL_DEBUG, "Parsing cmdline %s",cmdline);
   struct cmd *cmdp;
   int argc;
   char *argv[32];
@@ -228,20 +229,25 @@ int cmdparse(struct cmd *list, char *cmdline)
   strlwr(argv[0]);
   switch (cmdp->type) {
   case CMD_INTERNAL: /* execute internal command */
+    node_log(LOGLVL_DEBUG, "Preparing internal command");
     return (*cmdp->function)(argc, argv);
   case CMD_ALIAS:
+    node_log(LOGLVL_DEBUG, "Evaluating alias command");
     /* evaluate arguments */
     expand_string(cmdbuf, cmdp->command, argc, argv);
     aliascmd=1;
+    node_log(LOGLVL_DEBUG, "Prepare to re-execute parsing");
     /* re-execute the command */
     return cmdparse(list, cmdbuf);
   case CMD_EXTERNAL:
+    node_log(LOGLVL_DEBUG, "Evaluating external command");
     /* evaluate arguments */
     expand_string(cmdbuf, cmdp->command, argc, argv);
     /* convert the cmdline to argc,argv[] */
     argc = parse_args(argv, cmdbuf);
     /* execute an external command */
     axio_puts("\n",NodeIo);
+    node_log(LOGLVL_DEBUG, "Prepare to execute external command");
     return extcmd(cmdp, argv);
   }
   return -1;
